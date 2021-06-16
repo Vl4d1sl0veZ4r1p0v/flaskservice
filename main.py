@@ -35,16 +35,16 @@ def start():
 def predict():
     if not (request.json and 'text' in request.json):
         abort(Response("Your request should be in JSON format: {'text':[texts]}\n"))
-    user_query = request.json['query']
+    user_query = request.json['text']
     #:todo
     data = list(map(float, user_query.split(' ')))
-    data = np.array(data)
+    data = np.array([data])
     try:
         prediction = clf_.predict(data)
     except Exception as ex:
         prediction = ex
-    return {'prediction': prediction}
+    return {'prediction': prediction.tolist()}
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0')

@@ -1,3 +1,12 @@
-Flask==2.0.0
-scikit-learn
+certifi==2021.5.30
+click
+Flask
+itsdangerous
+Jinja2
+joblib
+MarkupSafe
 numpy
+scikit-learn
+scipy
+threadpoolctl
+Werkzeug
