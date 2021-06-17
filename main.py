@@ -1,12 +1,21 @@
 import json
+import time
+
 import numpy as np
 from sklearn import datasets
 from flask import Flask, request, abort, Response
 from model import Model
+import time
 
 app = Flask(__name__)
 
+print("Model loading...")
 clf_ = Model()
+time.sleep(3)
+print("Model loaded!")
+
+
+
 
 BREAK_FOLDER = 'data'
 ALLOWED_EXTENSIONS = ['txt']
@@ -37,14 +46,15 @@ def predict():
         abort(Response("Your request should be in JSON format: {'text':[texts]}\n"))
     user_query = request.json['text']
     #:todo
+    print("Data uploaded.")
     data = list(map(float, user_query.split(' ')))
     data = np.array([data])
     try:
         prediction = clf_.predict(data)
     except Exception as ex:
         prediction = ex
-    return {'prediction': prediction.tolist()}
+    return str(prediction.tolist()) + "\n"
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, host="0.0.0.0")
